@@ -19,7 +19,7 @@ templatename = arguments[1]
 
 path = os.curdir
 filepath = os.path.join(path, filename) #emails.txt
-templatepath = os.path.join(path,"email_tmpl.txt") # email_tmpl.txt
+templatepath = os.path.join(path,templatename) # email_tmpl.txt
 
 for line in open(filepath):
     name, email = line.split(",")
