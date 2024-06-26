@@ -36,5 +36,4 @@ print(
     f"{compra['quantidade']} unidades do produto "
     f"{compra['produto']['nome']}"
     f" e pagou o total de {total_compra}"
-    f" As cores sao {compra['produto']['cores']}"
 )
