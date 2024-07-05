@@ -9,7 +9,6 @@ try:
 except FileNotFoundError as e: # ('apenas except:' é um Bare except - captura qualquer erro. Tratamento de erro tem que ser bem específico)
     print(f"{str(e)}.")
     sys.exit(1)
-    sys.exit(1)
     # TODO: Usar retry
 else:
     print("Sucesso!!")

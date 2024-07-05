@@ -32,16 +32,29 @@ __license__ = "Unlicense"
 
 import os
 import sys
+import logging
+
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+log = logging.Logger("Rafael", log_level) 
+ch = logging.StreamHandler()
+ch.setLevel(log_level)
+fmt = logging.Formatter(
+    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 from datetime import datetime
 arguments = sys.argv[1:]
 
-# TODO: Exceptions
+# Validacao
 if not arguments: # Esse If Not é basicamente se o usuário não passar argumentos. Como se fosse um If Isblank
     operation = input("operação:")
     n1 = input("n1:")
     n2 = input("n2:")
     arguments = [operation, n1, n2]
+
+# Validacao
 elif len(arguments) != 3:
     print("Número de argumentos inválidos")
     print("ex: 'sum 5 5'")
@@ -67,7 +80,10 @@ for num in nums:
         num = int(num)
     validated_nums.append(num)
 
-n1, n2 = validated_nums
+try:
+    n1, n2 = validated_nums
+except ValueError as e:
+    print(str(e))
 
 # TODO: usar dict de funcoes
 if operation == "sum":
@@ -79,12 +95,20 @@ elif operation == "mul":
 elif operation == "div":
     result = n1 / n2
 
+print(f"O resultado é {result}")
+
 path = os.curdir
 filepath = os.path.join(path, "infixcalc.log")
 timestamp = datetime.now().isoformat()
 user = os.getenv('USER','anonymous')
 
-with open(filepath, "a") as file_:
-    file_.write(f"{timestamp} - {user} - {operation}, {n1}, {n2} = {result}\n") 
-
-print(f"O resultado é {result}")
+try:
+    with open(filepath, "a") as file_:
+        file_.write(f"{timestamp} - {user} - {operation}, {n1}, {n2} = {result}\n") 
+except PermissionError as e:
+    log.error(
+        "You don't have permissions to access the file."
+        "%s ", str(e)
+    )
+    print(str(e))
+    sys.exit(1)

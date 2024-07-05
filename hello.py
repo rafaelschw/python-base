@@ -20,25 +20,47 @@ Execução:
     ou
     ./hello.py
 """
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 __author__ = "Rafael Schwambach"
 __license__ = "Unlicense"
 
 import os
 import sys
+import logging
+
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+log = logging.Logger("Rafael", log_level) 
+ch = logging.StreamHandler()
+ch.setLevel(log_level)
+fmt = logging.Formatter(
+    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 # Definição de quais argumentos o programa aceita receber
 
 arguments = {"lang": None, "count": 1}
 
 for arg in sys.argv[1:]:
-    # TODO: Tratar ValueError
-    key, value = arg.split("=")
+    try:
+        key, value = arg.split("=")
+    except ValueError as e:
+        log.error(
+            "You need to use '=', you passed %s, try --key=value: %s", 
+            arg,
+            str(e)
+        )
+        sys.exit(1)
+
     key = key.lstrip("-").strip()
     value = value.strip()
+
+    # Validação
     if key not in arguments:
         print(f"Invalid Option '{key}'")
         sys.exit()
+
     arguments[key] = value
 
 current_language = arguments["lang"]
@@ -70,6 +92,19 @@ msg = {
 #     msg = "Bonjour, Monde!"
 
 # O(1) - constante
+
+try:
+    message = msg[current_language]
+except KeyError as e:
+    print(f"[ERROR] {str(e)}")
+    print(f"Please insert a valid language, choose from: {list(msg.keys())}")
+    sys.exit(1)
+
+"""
+# Try com valor default
+message = msg.get(current_language,msg["en_US"])
+"""
+
 print(
-    msg[current_language] * int(arguments["count"])
-) 
+    message * int(arguments["count"])
+)

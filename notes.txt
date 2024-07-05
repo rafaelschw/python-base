@@ -1,0 +1,7 @@
+Minha segunda Nota	tecnologia	Python é top
+Minha primeira Nota	geral	Na verdade essa é a segunda
+3a Nota	tecnologia	Outra nota
+tecnologia	tecnologia	Preciso estudar mais Python
+Nota teste	vida	Python na verdade é uma espécie de cobra
+Note Title	aula de try and exception	coloquei o try: e exception: no if do New
+Anotacao	tech	ola

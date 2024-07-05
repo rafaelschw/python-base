@@ -1,0 +1,5 @@
+"Minha Nova Nota 03/07"	python	While e for para repetir
+Post 1	geral	qualquer texto
+Titulo 123	geral	hello
+Faminto	food	batata
+Testeas	Esporte	Thunder
