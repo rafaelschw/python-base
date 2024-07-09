@@ -33,7 +33,7 @@ log = logging.Logger("Rafael", log_level)
 ch = logging.StreamHandler()
 ch.setLevel(log_level)
 fmt = logging.Formatter(
-    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s"
+    "%(asctime)s %(name)s %(levelname)s l:%(lineno)d f:%(filename)s: %(message)s" 
 )
 ch.setFormatter(fmt)
 log.addHandler(ch)
